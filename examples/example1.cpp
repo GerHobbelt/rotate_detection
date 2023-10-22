@@ -1,12 +1,20 @@
 #include <iostream>
 #include <cmath>
-#include <allheaders.h>
+#include <leptonica/allheaders.h>
 #include "pixwrap.h"
 #include "get_rotation.h"
 
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795028841971693993751058209749445923078164
+#endif
+
 using derot::PixWrap;
 
-int main(int argc, char* argv[])
+#if defined(BUILD_MONOLITHIC)
+#define main			librotate_detect_example1_main
+#endif
+
+int main(int argc, const char** argv)
 {
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <from_image_file> <to_file.png>" << std::endl; 

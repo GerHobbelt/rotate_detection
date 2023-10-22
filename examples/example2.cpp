@@ -7,7 +7,11 @@
 using derot::PixWrap;
 using derot::PixRotOpts;
 
-int main(int argc, char* argv[])
+#if defined(BUILD_MONOLITHIC)
+#define main			librotate_detect_example2_main
+#endif
+
+int main(int argc, const char** argv)
 {
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <from_image_file> <to_file.png>" << std::endl; 

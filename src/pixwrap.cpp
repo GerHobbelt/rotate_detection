@@ -3,7 +3,7 @@
 // 
 
 #include "pixwrap.h"
-#include <allheaders.h>
+#include <leptonica/allheaders.h>
 
 namespace derot{ //detect rotation
     

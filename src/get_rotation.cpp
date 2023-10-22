@@ -5,8 +5,11 @@
 #include <limits>
 #include <thread>
 #include <future>
-#include <allheaders.h> // leptonica
+#include <leptonica/allheaders.h> // leptonica
 
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795028841971693993751058209749445923078164
+#endif
 
 namespace {
     using derot::PixWrap;
@@ -25,7 +28,7 @@ namespace {
         return (p > 0.0 && p < 1.0) ? 2 * log(sqrt(p) + sqrt(q)) : 0.0;
     }
 
-    double getEntropy(const uint32_t *pixData, size_t width, size_t height, size_t diagonal, uint margin, int32_t wpl, int angle, bool use_vertical) noexcept
+    double getEntropy(const uint32_t *pixData, size_t width, size_t height, size_t diagonal, unsigned int margin, int32_t wpl, int angle, bool use_vertical) noexcept
     {
         double angle_rad = angle * M_PI / 180;
         double cos_ = cos(angle_rad);
@@ -82,7 +85,7 @@ namespace {
         return entSum;
     }
 
-    std::pair<int, double> find_best(const uint32_t *pixData, size_t width, size_t height, size_t diagonal, uint margin, int32_t wpl, const PixRotOpts& opts) noexcept
+    std::pair<int, double> find_best(const uint32_t *pixData, size_t width, size_t height, size_t diagonal, unsigned int margin, int32_t wpl, const PixRotOpts& opts) noexcept
     {
         int    best_angle = 0;
         double min_ent    = std::numeric_limits<double>::max();
@@ -130,7 +133,7 @@ namespace derot{ //detect rotation
         const uint32_t *pixData = pixGetData(const_cast<Pix*>(pix));
 
 
-        uint threads = (0 == opts.threads) ? std::thread::hardware_concurrency() : opts.threads;
+        unsigned int threads = (0 == opts.threads) ? std::thread::hardware_concurrency() : opts.threads;
         if(1 == threads) {
             auto [best_angle, min_ent] = find_best(pixData, width, height, diagonal, opts.margin, wpl, opts);
             return best_angle;
